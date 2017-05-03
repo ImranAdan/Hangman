@@ -1,6 +1,6 @@
 # Hangman Game
 
-The challenge is to build a simple version of a 'hangman' game as a web-app. 
+Hangman as a web-app. 
 
  - The app needs a client side to play the game (any browser tech as long as it's easy to install and run). 
  - The app should keep the current game state persistent across server and browser re-starts. 
