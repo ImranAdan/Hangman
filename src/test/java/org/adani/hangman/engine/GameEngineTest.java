@@ -50,8 +50,7 @@ public class GameEngineTest{
 		assertTrue("A word is generated" ,!word.isEmpty());
 		
 		int numberOfPermittedGuesses = game.getNumberOfPermittedGuesses();
-		assertThat("Number of permitted letters to guess equal to length of word plus an allowance!", numberOfPermittedGuesses,
-				equalTo(word.length() + Game.getGuessAllowance()));
+		assertThat("Number of permitted letters to guess equal to length of word plus an allowance!", numberOfPermittedGuesses, equalTo(word.length() + Game.getGuessAllowance()));
 		
 		boolean gameOver = game.isGameOver();
 		assertFalse("New game that is created can not be over!", gameOver);
@@ -98,6 +97,8 @@ public class GameEngineTest{
 		boolean gameOver = game.isGameOver();
 		assertFalse("New game that is created can not be over!", gameOver);
 	}
+	
+	
 	
 
 }

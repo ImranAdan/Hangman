@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Game {
 
-	private static final int GAME_GUESS_ALLOWANCE = 5;
+	private static final int GAME_GUESS_ALLOWANCE = 5; // Maybe this allowance makes it complicated? Could scrap this
 	
 	@Id private final String id;
 	private final Player player;
@@ -50,7 +50,7 @@ public class Game {
 		this.numberOfPermittedGuesses = numberOfPermittedGuesses;
 	}
 
-	public boolean isGameOver() { //??
+	public boolean isGameOver() { //?? TODO: This requires further definition
 		return this.getNumberOfPermittedGuesses() == 0;
 	}
 	

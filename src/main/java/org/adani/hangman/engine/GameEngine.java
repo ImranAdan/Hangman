@@ -16,8 +16,12 @@ public class GameEngine {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameEngine.class);
 
+	private final RNG rng;
+	
 	@Autowired
-	private RNG rng;
+	public GameEngine(RNG rng){
+		this.rng = rng;
+	}
 
 	public Game createGame(Player p) {
 		Game g = createHangmanGame(p);
@@ -56,6 +60,11 @@ public class GameEngine {
 
 		return indicies.isEmpty() ? false : true;
 	}
+	
+	
+	
+	
+	
 
 	public Game saveGame(Player p) {
 		throw new NotImplementedException("Write test");
