@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/java,maven,eclipse
+# Created by https://www.gitignore.io/api/java,maven,windows,eclipse
 
 ### Eclipse ###
 
@@ -98,4 +98,27 @@ buildNumber.properties
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
 
-# End of https://www.gitignore.io/api/java,maven,eclipse
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+!maven-wrapper.jar
+
+
+# End of https://www.gitignore.io/api/java,maven,windows,eclipse
