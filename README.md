@@ -1,7 +1,7 @@
 # Hangman Game
 
 
-[![Build Status](https://github.com/ImranAdan/Hangman?branch=master)](https://github.com/ImranAdan/Hangman)
+[![Build Status](https://travis-ci.org/ImranAdan/Hangman.svg?branch=master)](https://travis-ci.org/ImranAdan/Hangman)
 
 ## Hangman as a web-app. 
 
