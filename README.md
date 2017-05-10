@@ -16,7 +16,7 @@
 
 Server Dependencies: 
  
- - MongoDB
+ - MongoDB v3+
  - Maven  
  
  
