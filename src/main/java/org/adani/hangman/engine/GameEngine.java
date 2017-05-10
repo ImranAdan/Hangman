@@ -45,6 +45,7 @@ public class GameEngine {
 			}
 		}
 
+		// TODO: add drawing of hangman character
 		if (!indicies.isEmpty()) {
 			char[] charArrayReplace = correctGuess.toCharArray();
 			for (int index : indicies) {
@@ -62,10 +63,11 @@ public class GameEngine {
 	}
 	
 	
+	public void updateHangmanState(Game game, boolean drawNextPart) {
+		throw new NotImplementedException("Write test first");
+	}
 	
 	
-	
-
 	public Game saveGame(Player p) {
 		throw new NotImplementedException("Write test");
 	}

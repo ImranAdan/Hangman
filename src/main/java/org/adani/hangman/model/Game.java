@@ -10,26 +10,32 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Game {
 
-	private static final int GAME_GUESS_ALLOWANCE = 5; // Maybe this allowance makes it complicated? Could scrap this
-	
-	@Id private final String id;
+	private static final int GAME_GUESS_ALLOWANCE = 5; // Maybe this allowance
+														// makes it complicated?
+														// Could scrap this
+
+	@Id
+	private final String id;
 	private final Player player;
 	private final String word;
 	private final LocalDateTime startTs;
-	
+
 	private String currentGuess;
+	private int numberOfIncorrectGuesses;
 	private int numberOfPermittedGuesses;
-	
+
+	private boolean gameOver;
+
 	public Game(Player player, String wordToGuess) {
 		this.player = player;
 		this.word = wordToGuess;
-		this.startTs= LocalDateTime.now();
+		this.startTs = LocalDateTime.now();
 		this.id = player.getName() + "_" + this.word + "_" + this.startTs.toString();
-		
+
 		this.setCurrentGuess(this.word.replaceAll(".", "_"));
 		this.setNumberOfPermittedGuesses(wordToGuess.length() + GAME_GUESS_ALLOWANCE);
 	}
-	
+
 	public Player getPlayer() {
 		return player;
 	}
@@ -41,28 +47,37 @@ public class Game {
 	public LocalDateTime getStartTs() {
 		return startTs;
 	}
-	
+
 	public int getNumberOfPermittedGuesses() {
 		return numberOfPermittedGuesses;
 	}
-	
+
 	public void setNumberOfPermittedGuesses(int numberOfPermittedGuesses) {
 		this.numberOfPermittedGuesses = numberOfPermittedGuesses;
 	}
 
-	public boolean isGameOver() { //?? TODO: This requires further definition
-		return this.getNumberOfPermittedGuesses() == 0;
+	public int getNumberOfIncorrectGuesses() {
+		return numberOfIncorrectGuesses;
 	}
-	
 
-	
-	
+	public void setNumberOfIncorrectGuesses(int numberOfIncorrectGuesses) {
+		this.numberOfIncorrectGuesses = numberOfIncorrectGuesses;
+	}
+
 	public void setCurrentGuess(String currentGuess) {
 		this.currentGuess = currentGuess;
 	}
-	
+
 	public String getCurrentGuess() {
 		return currentGuess;
+	}
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
 	}
 
 	@Override
@@ -94,8 +109,7 @@ public class Game {
 			return false;
 		return true;
 	}
-	
-	
+
 	public static int getGuessAllowance() {
 		return GAME_GUESS_ALLOWANCE;
 	}
