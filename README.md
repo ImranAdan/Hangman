@@ -1,5 +1,8 @@
 # Hangman Game
 
+
+[![Build Status](https://github.com/ImranAdan/Hangman?branch=master)](https://github.com/ImranAdan/Hangman)
+
 ## Hangman as a web-app. 
 
  - The app needs a client side to play the game, browser based. 
