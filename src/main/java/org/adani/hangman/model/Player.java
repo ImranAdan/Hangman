@@ -23,11 +23,14 @@ public class Player {
 	
 
 	public String getId() {
-		return id;
+		return null;
 	}
 
 	public String getName() {
 		return name;
+		
+		
+		
 	}
 
 	public LocalDateTime getCreationTs() {

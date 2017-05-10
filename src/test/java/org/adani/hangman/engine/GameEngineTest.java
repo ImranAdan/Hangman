@@ -20,6 +20,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = TestApplication.class)
 public class GameEngineTest{
 
+	
+	// TODO: will refactor slight mess!!!
+	
 	@MockBean private RNG rng;
 	@Autowired private GameEngine engine;
 	
