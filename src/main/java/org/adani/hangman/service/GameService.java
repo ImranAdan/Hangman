@@ -1,5 +1,6 @@
 package org.adani.hangman.service;
 
+import org.adani.hangman.model.Game;
 import org.adani.hangman.model.Player;
 import org.adani.hangman.repository.GameRepository;
 import org.apache.commons.lang3.NotImplementedException;
@@ -15,20 +16,17 @@ public class GameService {
 
 	@Autowired
 	private GameRepository gameRepo;
-
-	public Player createPlayer(String name) {
-		throw new NotImplementedException("Write test!");
+	
+	
+	public Game createGame(){
+		throw new NotImplementedException("Write test first");
 	}
-
-	public Player createPlayer(Player p) {
-		throw new NotImplementedException("Write test!");
+	
+	public Game getGame(String id){
+		throw new NotImplementedException("Write test first");
 	}
-
-	public Player loadPlayer(Player p) {
-		throw new NotImplementedException("Write test!");
-	}
-
-	public void deletePlayer(Player p) {
-		throw new NotImplementedException("Write test!");
+	
+	public Game updateGame(Game g, char nextGuess){
+		throw new NotImplementedException("Write test first");
 	}
 }
