@@ -8,6 +8,7 @@ import static org.mockito.BDDMockito.given;
 import org.adani.hangman.TestApplication;
 import org.adani.hangman.model.Player;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = TestApplication.class)
-public class GameEngineTest{
+@Ignore public class GameEngineTest{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameEngineTest.class);
 	
