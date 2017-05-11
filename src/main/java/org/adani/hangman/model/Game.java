@@ -10,9 +10,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Game {
 
-	private static final int GAME_GUESS_ALLOWANCE = 5; // Maybe this allowance
-														// makes it complicated?
-														// Could scrap this
+	/**
+	 * The number of guesses we allow a player to have.
+	 */
+	private static final int GAME_GUESS_ALLOWANCE = 5;
 
 	@Id
 	private final String id;
