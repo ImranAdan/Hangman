@@ -1,6 +1,7 @@
 package org.adani.hangman.model;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -23,7 +24,10 @@ public class Game {
 
 	// Properties for GamEngine
 	private final String wordToGuess;
+	
+	/**Store current guesses so far ie -E--O*/
 	private String currentGuess;
+	
 	private int incorrectGuesses;
 	private int permittedGuess;
 	private boolean gameOver;
@@ -36,8 +40,15 @@ public class Game {
 		
 		
 		this.permittedGuess = wordToGuess.length() + GAME_GUESS_ALLOWANCE; 
+		
+		initCurrentGuess();
 	}
 
+	private void initCurrentGuess() {
+		char[] chars = new char[wordToGuess.length()];
+		Arrays.fill(chars, '_');
+		currentGuess = new String(chars);
+	}
 
 	public static int getGameGuessAllowance() {
 		return GAME_GUESS_ALLOWANCE;
