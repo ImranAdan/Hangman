@@ -2,7 +2,7 @@ package org.adani.hangman.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
@@ -31,6 +31,13 @@ public class GameTest {
 		assertEquals(g1.hashCode(), g2.hashCode());
 		assertEquals(g2.hashCode(), g2.hashCode());
 		assertNotEquals(g3.hashCode(), g2.hashCode());
+	}
+	
+	@Test
+	public void testCurrentGuessIsEmpty() {
+		final Game g1 = new Game(PLAYER, "HELLO");
+		assertNotNull(g1.getCurrentGuess());
+		assertEquals("_____", g1.getCurrentGuess());
 	}
 
 }

@@ -1,6 +1,7 @@
 package org.adani.hangman.model;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -22,22 +23,32 @@ public class Game {
 	private final LocalDateTime startTs;
 
 	// Properties for GamEngine
-	private final String word;
+	private final String wordToGuess;
+	
+	/**Store current guesses so far ie -E--O*/
 	private String currentGuess;
+	
 	private int incorrectGuesses;
 	private int permittedGuess;
 	private boolean gameOver;
 
 	public Game(Player player, String wordToGuess) {
 		this.player = player;
-		this.word = wordToGuess;
+		this.wordToGuess = wordToGuess;
 		this.startTs = LocalDateTime.now();
-		this.id = player.getName() + "_" + this.word + "_" + this.startTs.toString();
+		this.id = player.getName() + "_" + this.wordToGuess + "_" + this.startTs.toString();
 		
 		
-		this.permittedGuess = word.length() + GAME_GUESS_ALLOWANCE; 
+		this.permittedGuess = wordToGuess.length() + GAME_GUESS_ALLOWANCE; 
+		
+		initCurrentGuess();
 	}
 
+	private void initCurrentGuess() {
+		char[] chars = new char[wordToGuess.length()];
+		Arrays.fill(chars, '_');
+		currentGuess = new String(chars);
+	}
 
 	public static int getGameGuessAllowance() {
 		return GAME_GUESS_ALLOWANCE;
@@ -59,8 +70,8 @@ public class Game {
 	}
 
 
-	public String getWord() {
-		return word;
+	public String getWordToGuess() {
+		return wordToGuess;
 	}
 
 
