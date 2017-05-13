@@ -18,12 +18,12 @@ public class Game {
 
 	// Properties for GameService
 	@Id
-	private final String id;
-	private final Player player;
-	private final LocalDateTime startTs;
+	private String id;
+	private Player player;
+	private LocalDateTime startTs;
 
 	// Properties for GamEngine
-	private final String wordToGuess;
+	private String wordToGuess;
 	
 	/**Store current guesses so far ie -E--O*/
 	private String currentGuess;
@@ -32,6 +32,9 @@ public class Game {
 	private int permittedGuess;
 	private boolean gameOver;
 
+	public Game(){
+	}
+	
 	public Game(Player player, String wordToGuess) {
 		this.player = player;
 		this.wordToGuess = wordToGuess;
@@ -48,6 +51,22 @@ public class Game {
 		char[] chars = new char[wordToGuess.length()];
 		Arrays.fill(chars, '_');
 		currentGuess = new String(chars);
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public void setStartTs(LocalDateTime startTs) {
+		this.startTs = startTs;
+	}
+
+	public void setWordToGuess(String wordToGuess) {
+		this.wordToGuess = wordToGuess;
 	}
 
 	public static int getGameGuessAllowance() {

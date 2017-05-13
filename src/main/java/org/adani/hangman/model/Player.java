@@ -11,8 +11,7 @@ public class Player {
 	private String name;
 	private LocalDateTime creationTs;
 
-	public Player(){
-		
+	public Player(){	
 	}
 	
 	public void setId(String id) {
@@ -55,8 +54,6 @@ public class Player {
 	public int hashCode() {
 		int result = 7;
 		result = result * 31 + id.hashCode();
-		result = result * 31 + name.hashCode();
-		result = result * 31 + creationTs.hashCode();
 		return result;
 	}
 
@@ -70,8 +67,6 @@ public class Player {
 			return false;
 		Player other = (Player) obj;
 		
-		return id.equals(other.id) &&
-				name.equals(name) &&
-				creationTs.equals(other.creationTs);
+		return id.equals(other.id);
 	}
 }
