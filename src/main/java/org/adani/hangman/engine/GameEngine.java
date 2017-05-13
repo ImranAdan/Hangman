@@ -1,9 +1,7 @@
 package org.adani.hangman.engine;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.adani.hangman.model.Game;
+import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,31 +25,7 @@ public class GameEngine {
 	 * @param nextCharacter The next guessed character.
 	 * @return The updated game based on the character that was provided. 
 	 */
-	public Game updateGame(Game game, char nextCharacter) {
-		final String wordToGuess = game.getWordToGuess();
-		final String correctGuessSoFar = game.getCurrentGuess();
-
-		List<Integer> indicies = new ArrayList<>();
-		for (int i = 0; i < wordToGuess.length(); i++) {
-			if (wordToGuess.charAt(i) == nextCharacter) {
-				indicies.add(i);
-			}
-		}
-
-		if (!indicies.isEmpty()) {
-			char[] charArrayReplace = correctGuessSoFar.toCharArray();
-			for (int index : indicies) {
-				charArrayReplace[index] = nextCharacter;
-				game.setCurrentGuess(String.valueOf(charArrayReplace));
-			}
-
-		} else {
-			game.setPermittedGuess((game.getPermittedGuess() - 1));
-		}
-
-		if (game.getPermittedGuess() == 0) {
-			game.setGameOver(true);
-		}
+	public Game updateGameState(Game game, char nextCharacter) {
 		
 		/**
 		 * TODO: Given a game and a next character, update the state of the game
@@ -81,6 +55,6 @@ public class GameEngine {
 		 * 
 		 */
 		
-		return game;
+		throw new NotImplementedException("Implementation no part of this feature");
 	}
 }
