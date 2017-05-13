@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.adani.hangman.engine.GameEngine;
 import org.adani.hangman.model.Game;
-import org.adani.hangman.model.Player;
 import org.adani.hangman.repository.GameRepository;
-import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,11 @@ public class GameService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameService.class);
 
+	/*
+	 * TODO: Could potentially do some check here on validity of game before
+	 * saving.
+	 */
+	
 	@Autowired
 	private GameRepository gameRepo;
 	
@@ -29,18 +32,15 @@ public class GameService {
 	}
 	
 	public Game createGame(Game game){
-		Game g = gameRepo.save(game);
-		return g;
+		return gameRepo.save(game);
 	}
 	
 	public Game getGame(String id){
-		Game game = gameRepo.findOne(id);
-		return game;
+		return gameRepo.findOne(id);
 	}
 	
 	public Game saveGame(Game g) {
-		Game updatedGame = gameRepo.save(g);
-		return updatedGame;
+		return gameRepo.save(g);
 	}
 	
 	public Game updateGame(Game g, char nextGuess){

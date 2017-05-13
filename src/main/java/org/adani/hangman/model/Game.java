@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Document
 public class Game {
 
@@ -22,10 +24,15 @@ public class Game {
 	private final LocalDateTime startTs;
 
 	// Properties for GamEngine
+	@JsonIgnore
 	private final String word;
+	
 	private String currentGuess;
 	private int incorrectGuesses;
+	
+	@JsonIgnore
 	private int permittedGuess;
+	
 	private boolean gameOver;
 
 	public Game(Player player, String wordToGuess) {
