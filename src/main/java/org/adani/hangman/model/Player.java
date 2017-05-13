@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 public class Player {
 
@@ -39,9 +37,10 @@ public class Player {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		int result = 7;
+		result = result * 31 + id.hashCode();
+		result = result * 31 + name.hashCode();
+		result = result * 31 + creationTs.hashCode();
 		return result;
 	}
 
@@ -54,11 +53,9 @@ public class Player {
 		if (getClass() != obj.getClass())
 			return false;
 		Player other = (Player) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+		
+		return id.equals(other.id) &&
+				name.equals(name) &&
+				creationTs.equals(other.creationTs);
 	}
 }
