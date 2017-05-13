@@ -1,5 +1,8 @@
 package org.adani.hangman.service;
 
+import java.util.List;
+
+import org.adani.hangman.engine.GameEngine;
 import org.adani.hangman.model.Game;
 import org.adani.hangman.model.Player;
 import org.adani.hangman.repository.GameRepository;
@@ -17,16 +20,33 @@ public class GameService {
 	@Autowired
 	private GameRepository gameRepo;
 	
+	@Autowired
+	private GameEngine gameEngine;
 	
-	public Game createGame(){
-		throw new NotImplementedException("Write test first");
+	public List<Game> getCurrentGames() {
+		List<Game> currentGames = gameRepo.findByGameOver(false);
+		return currentGames;
+	}
+	
+	public Game createGame(Game game){
+		Game g = gameRepo.save(game);
+		return g;
 	}
 	
 	public Game getGame(String id){
-		throw new NotImplementedException("Write test first");
+		Game game = gameRepo.findOne(id);
+		return game;
+	}
+	
+	public Game saveGame(Game g) {
+		Game updatedGame = gameRepo.save(g);
+		return updatedGame;
 	}
 	
 	public Game updateGame(Game g, char nextGuess){
-		throw new NotImplementedException("Write test first");
+		Game updatedGame = gameEngine.updateGameState(g, nextGuess);
+		Game savedGame = saveGame(updatedGame);
+		return savedGame;
 	}
+
 }

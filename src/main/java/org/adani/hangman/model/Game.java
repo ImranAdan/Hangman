@@ -33,8 +33,6 @@ public class Game {
 		this.word = wordToGuess;
 		this.startTs = LocalDateTime.now();
 		this.id = player.getName() + "_" + this.word + "_" + this.startTs.toString();
-		
-		
 		this.permittedGuess = word.length() + GAME_GUESS_ALLOWANCE; 
 	}
 

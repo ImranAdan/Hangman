@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore public class GameControllerIT {
+public class GameControllerIT {
 
 	@Before
 	public void setUp() throws Exception {

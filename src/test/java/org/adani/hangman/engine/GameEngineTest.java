@@ -20,44 +20,47 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = TestApplication.class)
-@Ignore public class GameEngineTest{
+@Ignore
+public class GameEngineTest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameEngineTest.class);
-	
-	@MockBean private RandomWordGenerator randomWordGenerator;
-	
+
+	@MockBean
+	private RandomWordGenerator randomWordGenerator;
+
 	// SUBJECT UNDER TEST
-	@Autowired private GameEngine engine;
-	
+	@Autowired
+	private GameEngine engine;
+
 	private Player p;
-	
+
 	@Before
-	public void setUp(){
+	public void setUp() {
 		p = new Player("TEST");
 	}
-	
+
 	@Test
-	public void testMockGetWord(){
+	public void testMockGetWord() {
 		given(randomWordGenerator.getWord()).willReturn("WORD");
 		String mockWord = randomWordGenerator.getWord();
 		assertThat("Should be first word general!", mockWord, equalTo("WORD"));
 	}
 
-	
-	@Test 
-	public void testNextGuessWhenCharacterIsCorrect(){
+	@Test
+	public void testNextGuessWhenCharacterIsCorrect() {
 		fail("Test not implemented");
 	}
-	
-	@Test 
-	public void testNextGuessWhenCharacterIsInCorrect(){
+
+	@Test
+	public void testNextGuessWhenCharacterIsInCorrect() {
 		fail("Test not implemented");
 	}
-	
-	@Test 
-	public void testNextGuessWithCombinationOfCorrectIncorrectGuesses(){
+
+	@Test
+	public void testNextGuessWithCombinationOfCorrectIncorrectGuesses() {
 		fail("Test not implemented");
 	}
-	
-	// You May add additional tests here, e.g. test updating of Hangman, Test GameOver state etc etc
+
+	// You May add additional tests here, e.g. test updating of Hangman, Test
+	// GameOver state etc etc
 }
