@@ -45,6 +45,7 @@ public class GameController {
 	 * @return The game.
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
 	public Game getGame(@PathVariable(value = "id") String id) {
 		Game game = gameService.getGame(id);
 		return game;
@@ -58,6 +59,7 @@ public class GameController {
 	 * @return A new Game.
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
 	public Game createGame(@RequestBody(required = true) Game game) {
 		Game createdGame = gameService.createGame(game);
 		return createdGame;
@@ -73,6 +75,7 @@ public class GameController {
 	 * @return updated game.
 	 */
 	@RequestMapping(method = RequestMethod.PUT, value = "/{character}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
 	public Game updateGame(@RequestBody(required = true) Game game, @PathVariable(value = "character") char nextGuess) {
 		Game updatedGame = gameService.updateGame(game, nextGuess);
 		return updatedGame;
@@ -84,7 +87,8 @@ public class GameController {
 	 * @param game
 	 *            The game to be saved
 	 */
-	@RequestMapping(method = RequestMethod.PUT, value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.PUT, value = "/save", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
 	public Game saveGame(@RequestBody(required = true) Game game) {
 		Game saveGame = gameService.saveGame(game);
 		return saveGame;

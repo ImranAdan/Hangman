@@ -9,14 +9,30 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 public class Player {
 
-	private final String id;
-	private final String name;
-	private final LocalDateTime creationTs;
+	private  String id;
+	private String name;
+	private LocalDateTime creationTs;
+
+	public Player(){
+		
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setCreationTs(LocalDateTime creationTs) {
+		this.creationTs = creationTs;
+	}
 
 	public Player(String name) {
+		id = name + "_" + LocalDateTime.now().toString();
 		this.name = name;
 		creationTs = LocalDateTime.now();
-		id = name + "_" + LocalDateTime.now().toString();
 	}
 
 	public String getId() {

@@ -85,6 +85,7 @@ public class GameServiceIT {
 		char nextGuess = 'l';
 		
 		given(gameEngine.updateGameState(game, nextGuess)).willReturn(gameOver);
+		given(gameRepo.save(any(Game.class))).willReturn(gameOver);
 		
 		Game updateGame = gameService.updateGame(game, nextGuess);
 		verify(gameEngine, times(1)).updateGameState(game, nextGuess);

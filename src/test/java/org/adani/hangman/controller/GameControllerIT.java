@@ -1,15 +1,18 @@
 package org.adani.hangman.controller;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.fail;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
-
-import static org.mockito.BDDMockito.given;
 
 import org.adani.hangman.TestApplication;
 import org.adani.hangman.model.Game;
@@ -28,8 +31,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes =TestApplication.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = TestApplication.class)
 public class GameControllerIT {
 
 	@Autowired
@@ -40,58 +46,91 @@ public class GameControllerIT {
 
 	private MockMvc mockMvc;
 	private Player p;
+	private ObjectMapper o;
 
 	@Before
 	public void setUp() throws Exception {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 		p = new Player("TEST");
+		o = new ObjectMapper();
+		o.registerModule(new JavaTimeModule());
 	}
 
 	@Test
 	public void testGetCurrentGamesReturnCorrectHttpResponseAndPayload() throws Exception {
 		String gamesUri = GameController.GAME_BASE_URI + "/";
-		
+
 		given(gameServiceMock.getCurrentGames()).willReturn(Arrays.asList(activeGameCase()));
 		mockMvc.perform(get(gamesUri)).andExpect(status().is2xxSuccessful())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$", Matchers.hasSize(1)))
-				.andExpect(jsonPath("$[0].currentGuess", equalTo("HELL_")))
-				.andDo(print()).andReturn();
+				.andExpect(jsonPath("$[0].currentGuess", equalTo("HELL_"))).andDo(print()).andReturn();
 	}
 
 	@Test
-	public void testGetGame() {
-		fail("Not yet implemented");
+	public void testGetGame() throws Exception {
+		given(gameServiceMock.getGame(anyString())).willReturn(activeGameCase());
+		String getGameUri = GameController.GAME_BASE_URI + "/{id}";
+		String id = "MOCK_ID";
+		mockMvc.perform(get(getGameUri, id)).andExpect(status().is2xxSuccessful())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$.currentGuess", equalTo("HELL_"))).andDo(print()).andReturn();
 	}
 
 	@Test
-	public void testCreateGame() {
-		fail("Not yet implemented");
+	public void testCreateGame() throws Exception {
+		Game g = newGameCase();
+		given(gameServiceMock.createGame(any(Game.class))).willReturn(g);
+
+		String createGameUri = GameController.GAME_BASE_URI + "/create";
+		String content = o.writeValueAsString(g);
+		mockMvc.perform(post(createGameUri).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(content))
+				.andExpect(status().is2xxSuccessful()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$.currentGuess", equalTo("____"))).andDo(print()).andReturn();
 	}
 
 	@Test
-	public void testUpdateGame() {
-		fail("Not yet implemented");
+	public void testSaveGame() throws Exception {
+		Game activeGameCase = activeGameCase();
+		given(gameServiceMock.saveGame(any(Game.class))).willReturn(activeGameCase);
+
+		String saveGameUri = GameController.GAME_BASE_URI + "/save";
+		String content = o.writeValueAsString(activeGameCase);
+		mockMvc.perform(put(saveGameUri).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(content))
+				.andExpect(status().is2xxSuccessful()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$.currentGuess", equalTo("HELL_"))).andDo(print()).andReturn();
 	}
 
 	@Test
-	public void testSaveGame() {
-		fail("Not yet implemented");
+	public void testUpdateGame() throws Exception {
+		Game activeGameCase = activeGameCase();
+		Game gameIsOverCase = gameIsOverCase();
+
+		String updateGameUri = GameController.GAME_BASE_URI + "/{character}";
+		char character = 'I';
+
+		given(gameServiceMock.updateGame(activeGameCase, character)).willReturn(gameIsOverCase);
+
+		String content = o.writeValueAsString(activeGameCase);
+		mockMvc.perform(
+				put(updateGameUri, character).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(content))
+				.andExpect(status().is2xxSuccessful()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$.gameOver", equalTo(true))).andDo(print()).andReturn();
 	}
 
-	
 	private Game newGameCase() {
 		Game g = new Game(p, "TEST");
+		g.setCurrentGuess("____");
 		return g;
 	}
-	
-	private Game activeGameCase(){
+
+	private Game activeGameCase() {
 		Game g = new Game(p, "HELLO");
 		g.setCurrentGuess("HELL_");
 		return g;
 	}
-	
-	private Game gameIsOverCase(){
+
+	private Game gameIsOverCase() {
 		Game g = new Game(p, "TEST");
 		g.setGameOver(true);
 		return g;

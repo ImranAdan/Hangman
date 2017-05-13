@@ -19,13 +19,13 @@ public class Game {
 
 	// Properties for GameService
 	@Id
-	private final String id;
-	private final Player player;
-	private final LocalDateTime startTs;
+	private  String id;
+	private  Player player;
+	private  LocalDateTime startTs;
 
 	// Properties for GamEngine
 	@JsonIgnore
-	private final String word;
+	private  String word;
 	
 	private String currentGuess;
 	private int incorrectGuesses;
@@ -43,6 +43,7 @@ public class Game {
 		this.permittedGuess = word.length() + GAME_GUESS_ALLOWANCE; 
 	}
 
+	public Game(){}
 
 	public static int getGameGuessAllowance() {
 		return GAME_GUESS_ALLOWANCE;
