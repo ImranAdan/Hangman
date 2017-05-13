@@ -22,7 +22,7 @@ public class Game {
 	private final LocalDateTime startTs;
 
 	// Properties for GamEngine
-	private final String word;
+	private final String wordToGuess;
 	private String currentGuess;
 	private int incorrectGuesses;
 	private int permittedGuess;
@@ -30,12 +30,12 @@ public class Game {
 
 	public Game(Player player, String wordToGuess) {
 		this.player = player;
-		this.word = wordToGuess;
+		this.wordToGuess = wordToGuess;
 		this.startTs = LocalDateTime.now();
-		this.id = player.getName() + "_" + this.word + "_" + this.startTs.toString();
+		this.id = player.getName() + "_" + this.wordToGuess + "_" + this.startTs.toString();
 		
 		
-		this.permittedGuess = word.length() + GAME_GUESS_ALLOWANCE; 
+		this.permittedGuess = wordToGuess.length() + GAME_GUESS_ALLOWANCE; 
 	}
 
 
@@ -59,8 +59,8 @@ public class Game {
 	}
 
 
-	public String getWord() {
-		return word;
+	public String getWordToGuess() {
+		return wordToGuess;
 	}
 
 
