@@ -51,7 +51,8 @@ public class GameControllerIT {
 	@Before
 	public void setUp() throws Exception {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-		p = new Player("TEST");
+		p = new Player();
+		p.setName("TEST");
 		o = new ObjectMapper();
 		o.registerModule(new JavaTimeModule());
 	}

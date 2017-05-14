@@ -8,9 +8,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Document(collection = "Game")
 public class Game {
-	
+
 	/**
 	 * The number of guesses we allow a player to have.
 	 */
@@ -19,21 +21,22 @@ public class Game {
 	// Properties for GameService
 	@Id
 	private String id;
-	
-	
+
 	private Player player;
 	private LocalDateTime startTs;
 
 	// Properties for GamEngine
+	@JsonIgnore
 	private String wordToGuess;
+
 	private String currentGuess;
 	private int incorrectGuesses;
 	private int permittedGuess;
 	private boolean gameOver;
 
-	public Game(){
+	public Game() {
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -54,72 +57,58 @@ public class Game {
 		return GAME_GUESS_ALLOWANCE;
 	}
 
-
 	public String getId() {
 		return id;
 	}
-
 
 	public Player getPlayer() {
 		return player;
 	}
 
-
 	public LocalDateTime getStartTs() {
 		return startTs;
 	}
-
 
 	public String getWordToGuess() {
 		return wordToGuess;
 	}
 
-
 	public String getCurrentGuess() {
 		return currentGuess;
 	}
-
 
 	public int getIncorrectGuesses() {
 		return incorrectGuesses;
 	}
 
-
 	public int getPermittedGuess() {
 		return permittedGuess;
 	}
-
 
 	public boolean isGameOver() {
 		return gameOver;
 	}
 
-
 	public void setCurrentGuess(String currentGuess) {
 		this.currentGuess = currentGuess;
 	}
-
 
 	public void setIncorrectGuesses(int incorrectGuesses) {
 		this.incorrectGuesses = incorrectGuesses;
 	}
 
-
 	public void setPermittedGuess(int permittedGuess) {
 		this.permittedGuess = permittedGuess;
 	}
-
 
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
 
-
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -146,7 +135,7 @@ public class Game {
 		return true;
 	}
 
-	public static Game newGame(Player player, String wordToGuess){
+	public static Game newGame(Player player, String wordToGuess) {
 		Game game = initGame(player, wordToGuess);
 		return game;
 	}

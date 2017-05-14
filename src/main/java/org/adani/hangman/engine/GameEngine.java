@@ -52,6 +52,7 @@ public class GameEngine {
 
 		} else {
 			game.setPermittedGuess((game.getPermittedGuess() - 1));
+			// TODO: Update Hangman State
 		}
 
 		if (game.getPermittedGuess() == 0) {

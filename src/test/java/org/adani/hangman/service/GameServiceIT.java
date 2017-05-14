@@ -41,7 +41,8 @@ public class GameServiceIT {
 
 	@Before
 	public void setUp(){
-		p = new Player("TEST");
+		p = new Player();
+		p.setName("Test");
 	}
 
 	@Test
