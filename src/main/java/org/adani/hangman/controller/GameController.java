@@ -3,6 +3,7 @@ package org.adani.hangman.controller;
 import java.util.List;
 
 import org.adani.hangman.model.Game;
+import org.adani.hangman.model.Player;
 import org.adani.hangman.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -60,8 +61,8 @@ public class GameController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public Game createGame(@RequestBody(required = true) Game game) {
-		Game createdGame = gameService.createGame(game);
+	public Game createGame(@RequestBody(required = true) Player player) {
+		Game createdGame = gameService.createGame(player);
 		return createdGame;
 	}
 

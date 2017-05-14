@@ -48,7 +48,8 @@ public class GameServiceIT {
 	public void testCreateGame() {
 		Game g = newGameCase();
 		given(gameRepo.save(any(Game.class))).willReturn(g);
-		Game game = gameService.createGame(g);
+		given(gameEngine.getWord()).willReturn("TEST");
+		Game game = gameService.createGame(p);
 		assertThat("Games are equal!", game.getId(), equalTo(g.getId()));
 	}
 
@@ -95,18 +96,17 @@ public class GameServiceIT {
 	
 	
 	private Game newGameCase() {
-		Game g = new Game(p, "TEST");
-		return g;
+		return Game.newGame(p, "TEST");
 	}
 	
 	private Game activeGameCase(){
-		Game g = new Game(p, "HELLO");
+		Game g = Game.newGame(p, "HELLO");
 		g.setCurrentGuess("HELL_");
 		return g;
 	}
 	
 	private Game gameIsOverCase(){
-		Game g = new Game(p, "TEST");
+		Game g = Game.newGame(p, "TEST");
 		g.setGameOver(true);
 		return g;
 	}

@@ -80,7 +80,7 @@ public class GameControllerIT {
 	@Test
 	public void testCreateGame() throws Exception {
 		Game g = newGameCase();
-		given(gameServiceMock.createGame(any(Game.class))).willReturn(g);
+		given(gameServiceMock.createGame(any(Player.class))).willReturn(g);
 
 		String createGameUri = GameController.GAME_BASE_URI + "/create";
 		String content = o.writeValueAsString(g);
@@ -119,19 +119,17 @@ public class GameControllerIT {
 	}
 
 	private Game newGameCase() {
-		Game g = new Game(p, "TEST");
-		g.setCurrentGuess("____");
-		return g;
+		return Game.newGame(p, "TEST");
 	}
-
-	private Game activeGameCase() {
-		Game g = new Game(p, "HELLO");
+	
+	private Game activeGameCase(){
+		Game g = Game.newGame(p, "HELLO");
 		g.setCurrentGuess("HELL_");
 		return g;
 	}
-
-	private Game gameIsOverCase() {
-		Game g = new Game(p, "TEST");
+	
+	private Game gameIsOverCase(){
+		Game g = Game.newGame(p, "TEST");
 		g.setGameOver(true);
 		return g;
 	}

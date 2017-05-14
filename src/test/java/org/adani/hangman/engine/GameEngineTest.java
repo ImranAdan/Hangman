@@ -38,7 +38,7 @@ public class GameEngineTest{
 	@Before
 	public void setUp(){
 		player = new Player("TEST");
-		game = new Game(player, "HELLO");
+		game = Game.newGame(player, "HELLO");
 	}
 	
 	@Test

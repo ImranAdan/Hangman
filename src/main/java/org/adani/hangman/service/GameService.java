@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.adani.hangman.engine.GameEngine;
 import org.adani.hangman.model.Game;
+import org.adani.hangman.model.Player;
 import org.adani.hangman.repository.GameRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +15,6 @@ import org.springframework.stereotype.Service;
 public class GameService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(GameService.class);
-
-	/*
-	 * TODO: Could potentially do some check here on validity of game before
-	 * saving.
-	 */
 	
 	@Autowired
 	private GameRepository gameRepo;
@@ -31,7 +27,9 @@ public class GameService {
 		return currentGames;
 	}
 	
-	public Game createGame(Game game){
+	public Game createGame(Player player){
+		Game game = Game.newGame(player, gameEngine.getWord());
+		LOGGER.info("New Game: {}", game);
 		return gameRepo.save(game);
 	}
 	
