@@ -41,7 +41,8 @@ public class GameService {
 		return gameRepo.save(g);
 	}
 	
-	public Game updateGame(Game g, char nextGuess){
+	public Game updateGame(String id, char nextGuess){
+		Game g = gameRepo.findOne(id);
 		Game updatedGame = gameEngine.updateGameState(g, nextGuess);
 		Game savedGame = saveGame(updatedGame);
 		return savedGame;

@@ -75,10 +75,10 @@ public class GameController {
 	 *            The next character to be played in game.
 	 * @return updated game.
 	 */
-	@RequestMapping(method = RequestMethod.PUT, value = "/{character}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.PUT, value = "/update/{id}/{character}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public Game updateGame(@RequestBody(required = true) Game game, @PathVariable(value = "character") char nextGuess) {
-		Game updatedGame = gameService.updateGame(game, nextGuess);
+	public Game updateGame(@PathVariable("id") String id, @PathVariable("character") char nextGuess) {
+		Game updatedGame = gameService.updateGame(id, nextGuess);
 		return updatedGame;
 	}
 

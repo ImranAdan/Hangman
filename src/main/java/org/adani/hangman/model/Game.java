@@ -36,6 +36,17 @@ public class Game {
 
 	public Game() {
 	}
+	
+	public Game(Game g){ // Copy constructor
+		this.id = g.id;
+		this.player = g.player;
+		this.startTs = g.startTs;
+		this.wordToGuess = g.wordToGuess;
+		this.currentGuess = g.currentGuess;
+		this.incorrectGuesses = g.incorrectGuesses;
+		this.permittedGuess = g.permittedGuess;
+		this.gameOver = g.gameOver;
+	}
 
 	public void setId(String id) {
 		this.id = id;

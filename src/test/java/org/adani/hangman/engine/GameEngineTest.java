@@ -114,7 +114,7 @@ public class GameEngineTest{
 		
 		final Game gamed3 = engine.updateGameState(gamed2, 'H');
 		assertEquals("H_LL_", game.getCurrentGuess());
-		assertEquals(9, gamed.getPermittedGuess());
+		assertEquals(9, gamed3.getPermittedGuess());
 		
 	}
 	
