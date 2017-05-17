@@ -30,8 +30,8 @@ public class Game {
 	private String wordToGuess;
 
 	private String currentGuess;
-	private int incorrectGuesses;
-	private int permittedGuess;
+	private int incorrectGuessesCount;
+	private int remainingGuessesCount;
 	private boolean gameOver;
 
 	public Game() {
@@ -78,11 +78,11 @@ public class Game {
 	}
 
 	public int getIncorrectGuesses() {
-		return incorrectGuesses;
+		return incorrectGuessesCount;
 	}
 
 	public int getPermittedGuess() {
-		return permittedGuess;
+		return remainingGuessesCount;
 	}
 
 	public boolean isGameOver() {
@@ -94,11 +94,11 @@ public class Game {
 	}
 
 	public void setIncorrectGuesses(int incorrectGuesses) {
-		this.incorrectGuesses = incorrectGuesses;
+		this.incorrectGuessesCount = incorrectGuesses;
 	}
 
 	public void setPermittedGuess(int permittedGuess) {
-		this.permittedGuess = permittedGuess;
+		this.remainingGuessesCount = permittedGuess;
 	}
 
 	public void setGameOver(boolean gameOver) {
