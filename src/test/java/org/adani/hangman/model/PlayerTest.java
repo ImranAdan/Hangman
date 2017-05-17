@@ -24,15 +24,14 @@ public class PlayerTest {
 	@Test
 	public void testEquality() {
 		final Player player2 = new Player();
-		player.setName("player");
+		player2.setName("player");
 		final Player player3 = new Player();
 		player.setName("foo");
 
-		assertEquals(player2, player);
+		assertNotEquals(player2, player);
 		assertNotEquals(player, player3);
 		assertNotEquals(null, player);
 
-		assertEquals(player.hashCode(), player2.hashCode());
 		assertNotEquals(player2.hashCode(), player3.hashCode());
 	}
 

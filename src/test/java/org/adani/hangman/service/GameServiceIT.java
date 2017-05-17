@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -57,12 +58,16 @@ public class GameServiceIT {
 	@Test 
 	public void testGetCurrentGames(){
 		Game created = newGameCase();
-		Game inPlay = activeGameCase();
-		Game over = gameIsOverCase();
+		Game inPlay = new Game(created );
+		inPlay.setCurrentGuess("HELL_");
 		
-		given(gameRepo.save(created)).willReturn(created);
+		Game game = newGameCase();
+		Game gameOver = new Game(game);
+		gameOver.setGameOver(true);
+		
+		given(gameRepo.save(game)).willReturn(game);
 		given(gameRepo.save(inPlay)).willReturn(inPlay);
-		given(gameRepo.save(over)).willReturn(over);
+		given(gameRepo.save(gameOver)).willReturn(gameOver);
 
 		List<Game> currentGames = gameService.getCurrentGames();
 		verify(gameRepo, times(1)).findByGameOver(false);
@@ -73,7 +78,9 @@ public class GameServiceIT {
 	
 	@Test
 	public void testGetGame() {
-		Game inPlay = activeGameCase();
+		Game created = newGameCase();
+		Game inPlay = new Game(created );
+		inPlay.setCurrentGuess("HELL_");
 		given(gameRepo.findOne(inPlay.getId())).willReturn(inPlay);
 		
 		Game game = gameService.getGame(inPlay.getId());
@@ -83,13 +90,18 @@ public class GameServiceIT {
 	@Test
 	public void testUpdateGame() {
 		Game game = newGameCase();
-		Game gameOver = gameIsOverCase();
-		char nextGuess = 'l';
+		Game gameOver = new Game(game);
+		gameOver.setGameOver(true);
 		
+		
+		char nextGuess = 'l';
+
+		given(gameRepo.findOne(anyString())).willReturn(game);
 		given(gameEngine.updateGameState(game, nextGuess)).willReturn(gameOver);
 		given(gameRepo.save(any(Game.class))).willReturn(gameOver);
 		
-		Game updateGame = gameService.updateGame(game, nextGuess);
+
+		Game updateGame = gameService.updateGame(game.getId(), nextGuess);
 		verify(gameEngine, times(1)).updateGameState(game, nextGuess);
 		verify(gameRepo, times(1)).save(game);
 		assertTrue("Game is over!", updateGame.isGameOver());
@@ -100,15 +112,5 @@ public class GameServiceIT {
 		return Game.newGame(p, "TEST");
 	}
 	
-	private Game activeGameCase(){
-		Game g = Game.newGame(p, "HELLO");
-		g.setCurrentGuess("HELL_");
-		return g;
-	}
-	
-	private Game gameIsOverCase(){
-		Game g = Game.newGame(p, "TEST");
-		g.setGameOver(true);
-		return g;
-	}
+
 }

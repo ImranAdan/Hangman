@@ -61,7 +61,12 @@ public class GameControllerIT {
 	public void testGetCurrentGamesReturnCorrectHttpResponseAndPayload() throws Exception {
 		String gamesUri = GameController.GAME_BASE_URI + "/";
 
-		given(gameServiceMock.getCurrentGames()).willReturn(Arrays.asList(activeGameCase()));
+		
+		Game g = Game.newGame(p, "HELLO");
+		g.setId("TEST");
+		g.setCurrentGuess("HELL_");
+		
+		given(gameServiceMock.getCurrentGames()).willReturn(Arrays.asList(g));
 		mockMvc.perform(get(gamesUri)).andExpect(status().is2xxSuccessful())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$", Matchers.hasSize(1)))
@@ -70,7 +75,12 @@ public class GameControllerIT {
 
 	@Test
 	public void testGetGame() throws Exception {
-		given(gameServiceMock.getGame(anyString())).willReturn(activeGameCase());
+		
+		Game g = Game.newGame(p, "HELLO");
+		g.setId("TEST");
+		g.setCurrentGuess("HELL_");
+		
+		given(gameServiceMock.getGame(anyString())).willReturn(g);
 		String getGameUri = GameController.GAME_BASE_URI + "/{id}";
 		String id = "MOCK_ID";
 		mockMvc.perform(get(getGameUri, id)).andExpect(status().is2xxSuccessful())
@@ -92,11 +102,15 @@ public class GameControllerIT {
 
 	@Test
 	public void testSaveGame() throws Exception {
-		Game activeGameCase = activeGameCase();
-		given(gameServiceMock.saveGame(any(Game.class))).willReturn(activeGameCase);
+		
+		Game g = Game.newGame(p, "HELLO");
+		g.setId("TEST");
+		g.setCurrentGuess("HELL_");
+		
+		given(gameServiceMock.saveGame(any(Game.class))).willReturn(g);
 
 		String saveGameUri = GameController.GAME_BASE_URI + "/save";
-		String content = o.writeValueAsString(activeGameCase);
+		String content = o.writeValueAsString(g);
 		mockMvc.perform(put(saveGameUri).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(content))
 				.andExpect(status().is2xxSuccessful()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.currentGuess", equalTo("HELL_"))).andDo(print()).andReturn();
@@ -104,34 +118,30 @@ public class GameControllerIT {
 
 	@Test
 	public void testUpdateGame() throws Exception {
-		Game activeGameCase = activeGameCase();
-		Game gameIsOverCase = gameIsOverCase();
+		Game game = newGameCase();
+		game.setId("TEST");
+		Game gameOver = new Game(game);
+		gameOver.setGameOver(true);
 
-		String updateGameUri = GameController.GAME_BASE_URI + "/{character}";
+		String updateGameUri = GameController.GAME_BASE_URI + "/update/{id}/{character}";
 		char character = 'I';
+		String id = game.getId();
+		
+		given(gameServiceMock.updateGame(game.getId(), character)).willReturn(gameOver);
 
-		given(gameServiceMock.updateGame(activeGameCase, character)).willReturn(gameIsOverCase);
-
-		String content = o.writeValueAsString(activeGameCase);
+		String content = o.writeValueAsString(game);
+		
 		mockMvc.perform(
-				put(updateGameUri, character).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(content))
+				put(updateGameUri, id , character).contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(content))
 				.andExpect(status().is2xxSuccessful()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.gameOver", equalTo(true))).andDo(print()).andReturn();
 	}
 
 	private Game newGameCase() {
-		return Game.newGame(p, "TEST");
+		Game newGame = Game.newGame(p, "TEST");
+		newGame.setId("TEST");
+		return newGame;
 	}
 	
-	private Game activeGameCase(){
-		Game g = Game.newGame(p, "HELLO");
-		g.setCurrentGuess("HELL_");
-		return g;
-	}
-	
-	private Game gameIsOverCase(){
-		Game g = Game.newGame(p, "TEST");
-		g.setGameOver(true);
-		return g;
-	}
+
 }
