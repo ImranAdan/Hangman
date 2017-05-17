@@ -43,8 +43,8 @@ public class Game {
 		this.startTs = g.startTs;
 		this.wordToGuess = g.wordToGuess;
 		this.currentGuess = g.currentGuess;
-		this.incorrectGuesses = g.incorrectGuesses;
-		this.permittedGuess = g.permittedGuess;
+		this.incorrectGuessesCount = g.incorrectGuessesCount;
+		this.remainingGuessesCount = g.remainingGuessesCount;
 		this.gameOver = g.gameOver;
 	}
 
